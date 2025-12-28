@@ -4,6 +4,17 @@ A minimal hello world app with Surge deployment via GitHub Actions.
 
 **Live Site**: https://hello-surge.surge.sh (once configured)
 
+## Features
+
+- **Production deploys** on push to main
+- **PR preview deploys** with auto-comment showing preview URL
+- **Auto-teardown** of PR previews when PR closes
+- **Secure** two-stage workflow pattern (fork PRs can't access secrets)
+- **Debuggable** with 3 distinct jobs in GitHub Actions logs:
+  - `Deploy Main to Production`
+  - `Deploy PR Preview`
+  - `Teardown PR Preview`
+
 ## Setup Surge Deployment
 
 ### 1. Install Surge CLI
@@ -34,7 +45,7 @@ In the `surge-deploy` environment, add:
 | Secret | Value |
 |--------|-------|
 | `SURGE_TOKEN` | Your token from `surge token` |
-| `SURGE_DOMAIN` | `hello-surge.surge.sh` |
+| `SURGE_DOMAIN` | `hello-surge.surge.sh` (no `https://` prefix) |
 
 ### 5. Deploy
 
@@ -55,7 +66,10 @@ just deploy-prod
 The deployment uses a secure two-stage workflow:
 
 1. **Build workflow** (`build.yml`): Runs on PRs/pushes, uploads `dist/` as artifact
-2. **Deploy workflow** (`deploy-surge.yml`): Triggered by build completion, deploys artifact to Surge
+2. **Deploy workflow** (`deploy-surge.yml`): Triggered by build completion, has 3 jobs:
+   - `deploy-main`: Deploys main branch to production
+   - `deploy-pr`: Deploys PR to preview URL and comments on PR
+   - `teardown-pr`: Removes preview when PR closes
 
 This pattern is secure because:
 - Fork PRs run build WITHOUT secrets
