@@ -2,7 +2,7 @@
 
 A minimal hello world app with Surge deployment via GitHub Actions.
 
-**Live Site**: https://hello-surge.surge.sh (once configured)
+**Live Site**: https://idvorkin-hello-surge.surge.sh
 
 ## Features
 
@@ -45,7 +45,7 @@ In the `surge-deploy` environment, add:
 | Secret | Value |
 |--------|-------|
 | `SURGE_TOKEN` | Your token from `surge token` |
-| `SURGE_DOMAIN` | `hello-surge.surge.sh` (no `https://` prefix) |
+| `SURGE_DOMAIN` | `idvorkin-hello-surge.surge.sh` (no `https://` prefix) |
 
 ### 5. Deploy
 
@@ -74,7 +74,7 @@ The deployment uses a secure two-stage workflow:
 This pattern is secure because:
 - Fork PRs run build WITHOUT secrets
 - Deploy only downloads pre-built artifacts (no code execution)
-- PR previews auto-deploy to `pr-N-hello-surge.surge.sh`
+- PR previews auto-deploy to `pr-N-idvorkin-hello-surge.surge.sh`
 - PR previews auto-teardown when PR closes
 
 ## Adding PWA Support
